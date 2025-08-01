@@ -1,5 +1,11 @@
 #!/bin/bash
 
+curl -k  -L https://${SATELLITE_URL}/pub/katello-server-ca.crt -o /etc/pki/ca-trust/source/anchors/${SATELLITE_URL}.ca.crt
+update-ca-trust
+rpm -Uhv https://${SATELLITE_URL}/pub/katello-ca-consumer-latest.noarch.rpm
+
+subscription-manager register --org=${SATELLITE_ORG} --activationkey=${SATELLITE_ACTIVATIONKEY}
+
 systemctl stop systemd-tmpfiles-setup.service
 systemctl disable systemd-tmpfiles-setup.service
 
@@ -8,36 +14,36 @@ systemctl disable systemd-tmpfiles-setup.service
 # echo "192.168.1.10 control.lab control" >> /etc/hosts
 
 
-## set user name
-USER=rhel
+# ## set user name
+# USER=rhel
 
-## setup rhel user
-touch /etc/sudoers.d/rhel_sudoers
-echo "%rhel ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/rhel_sudoers
-cp -a /root/.ssh/* /home/$USER/.ssh/.
-chown -R rhel:rhel /home/$USER/.ssh
+# ## setup rhel user
+# touch /etc/sudoers.d/rhel_sudoers
+# echo "%rhel ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/rhel_sudoers
+# cp -a /root/.ssh/* /home/$USER/.ssh/.
+# chown -R rhel:rhel /home/$USER/.ssh
 
-## ansible home
-mkdir /home/$USER/ansible
-## ansible-files dir
-mkdir /home/$USER/ansible-files
+# ## ansible home
+# mkdir /home/$USER/ansible
+# ## ansible-files dir
+# mkdir /home/$USER/ansible-files
 
-## ansible.cfg
-echo "[defaults]" > /home/$USER/.ansible.cfg
-echo "inventory = /home/$USER/ansible-files/hosts" >> /home/$USER/.ansible.cfg
-echo "host_key_checking = False" >> /home/$USER/.ansible.cfg
+# ## ansible.cfg
+# echo "[defaults]" > /home/$USER/.ansible.cfg
+# echo "inventory = /home/$USER/ansible-files/hosts" >> /home/$USER/.ansible.cfg
+# echo "host_key_checking = False" >> /home/$USER/.ansible.cfg
 
-## chown and chmod all files in rhel user home
-chown -R rhel:rhel /home/$USER/ansible
-chmod 777 /home/$USER/ansible
-#touch /home/rhel/ansible-files/hosts
-chown -R rhel:rhel /home/$USER/ansible-files
+# ## chown and chmod all files in rhel user home
+# chown -R rhel:rhel /home/$USER/ansible
+# chmod 777 /home/$USER/ansible
+# #touch /home/rhel/ansible-files/hosts
+# chown -R rhel:rhel /home/$USER/ansible-files
 
 ## install python3 libraries needed for the Cloud Report
 dnf install -y python3-pip python3-libsemanage
 
 # Create a playbook for the user to execute
-tee /tmp/setup.yml << EOF
+cat <<EOF | tee /tmp/setup.yml
 ### Automation Controller setup 
 ###
 ---
