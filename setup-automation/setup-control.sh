@@ -234,6 +234,7 @@ tee /tmp/setup.yml << EOF
             ansible_host: controller
 
 EOF
+
 export ANSIBLE_LOCALHOST_WARNING=False
 export ANSIBLE_INVENTORY_UNPARSED_WARNING=False
 
