@@ -1,21 +1,15 @@
 #!/bin/bash
 
-curl -k  -L https://${SATELLITE_URL}/pub/katello-server-ca.crt -o /etc/pki/ca-trust/source/anchors/${SATELLITE_URL}.ca.crt
-update-ca-trust
-rpm -Uhv https://${SATELLITE_URL}/pub/katello-ca-consumer-latest.noarch.rpm
-
-subscription-manager register --org=${SATELLITE_ORG} --activationkey=${SATELLITE_ACTIVATIONKEY}
-
 systemctl stop systemd-tmpfiles-setup.service
 systemctl disable systemd-tmpfiles-setup.service
 
 
 echo "%rhel ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/rhel_sudoers
 chmod 440 /etc/sudoers.d/rhel_sudoers
-sudo -u rhel mkdir -p /home/rhel/.ssh
-sudo -u rhel chmod 700 /home/rhel/.ssh
-sudo -u rhel ssh-keygen -t rsa -b 4096 -C "rhel@$(hostname)" -f /home/rhel/.ssh/id_rsa -N "" -q
-sudo -u rhel chmod 600 /home/rhel/.ssh/id_rsa*
+# sudo -u rhel mkdir -p /home/rhel/.ssh
+# sudo -u rhel chmod 700 /home/rhel/.ssh
+# sudo -u rhel ssh-keygen -t rsa -b 4096 -C "rhel@$(hostname)" -f /home/rhel/.ssh/id_rsa -N "" -q
+# sudo -u rhel chmod 600 /home/rhel/.ssh/id_rsa*
 
 
 # nmcli connection add type ethernet con-name enp2s0 ifname enp2s0 ipv4.addresses 192.168.1.10/24 ipv4.method manual connection.autoconnect yes
@@ -67,23 +61,23 @@ cat <<EOF | tee /tmp/setup.yml
 
   tasks:
   
-    - name: Add SSH Controller credential to automation controller
-      ansible.controller.credential:
-        name: SSH Controller Credential
-        description: Creds to be able to SSH the contoller_host
-        organization: "Default"
-        state: present
-        credential_type: "Machine"
-        controller_host: "https://localhost"
-        controller_username: admin
-        controller_password: ansible123!
-        validate_certs: false
-        inputs:
-          username: rhel
-          ssh_key_data: "{{ lookup('file','/home/rhel/.ssh/id_rsa') }}"
-      register: controller_try
-      retries: 10
-      until: controller_try is not failed
+    # - name: Add SSH Controller credential to automation controller
+    #   ansible.controller.credential:
+    #     name: SSH Controller Credential
+    #     description: Creds to be able to SSH the contoller_host
+    #     organization: "Default"
+    #     state: present
+    #     credential_type: "Machine"
+    #     controller_host: "https://localhost"
+    #     controller_username: admin
+    #     controller_password: ansible123!
+    #     validate_certs: false
+    #     inputs:
+    #       username: rhel
+    #       ssh_key_data: "{{ lookup('file','/home/rhel/.ssh/id_rsa') }}"
+    #   register: controller_try
+    #   retries: 10
+    #   until: controller_try is not failed
 
     - name: Add AWS credential to automation controller
       ansible.controller.credential:
