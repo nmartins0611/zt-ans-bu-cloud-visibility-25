@@ -119,7 +119,7 @@ cat <<EOF | tee /tmp/setup.yml
         organization: "Default"
         state: present
         scm_type: git
-        scm_url: https://gitea:3000/awsoptimize25
+        scm_url: https://github.com/HichamMourad/awsoptimize25.git
         default_environment: "Default execution environment"
         controller_host: "https://localhost"
         controller_username: admin
