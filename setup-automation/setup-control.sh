@@ -3,9 +3,9 @@
 systemctl stop systemd-tmpfiles-setup.service
 systemctl disable systemd-tmpfiles-setup.service
 
-nmcli connection add type ethernet con-name enp2s0 ifname enp2s0 ipv4.addresses 192.168.1.10/24 ipv4.method manual connection.autoconnect yes
-nmcli connection up enp2s0
-echo "192.168.1.10 control.lab control" >> /etc/hosts
+# nmcli connection add type ethernet con-name enp2s0 ifname enp2s0 ipv4.addresses 192.168.1.10/24 ipv4.method manual connection.autoconnect yes
+# nmcli connection up enp2s0
+# echo "192.168.1.10 control.lab control" >> /etc/hosts
 
 
 ## set user name
