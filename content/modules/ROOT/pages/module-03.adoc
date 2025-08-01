@@ -2,234 +2,148 @@
 
 '''
 
-= OPTIONAL - Terraform Basics
+slug: cloudreport id: o4z20tq1onvl type: challenge title: Creating Dynamic Documentation teaser: Create a dynamic HTML website out of your public cloud structured data notes:
 
-Terraform is a fantastic tool used to provision immutable infrastructure.
-It is widely used for its declarative nature in Infrastructure as Code (IaC).
+* type: text contents: |-   # Challenge summary
++
+In this challenge we will create Dynamic Documentation.
+Public cloud enviornments are often being used by many different teams and invidiuals.
+By using automation we can quickly get a 'lay of the land' and then generate easy-to-read HTML, markdown, CSV files or whatever our team requires.
+Specifically, in this challenge we will create an HTML website from some pre-made Ansible roles.
 
-👋 Challenge 3 introduction.
+* type: text contents: |-   # Example dynamic documentation
++
+image::https://github.com/IPvSean/pictures_for_github/blob/master/big_cloud_report.png?raw=true[example picture of report]
++
+In this report it is really easy for the cloud operator to see there are several VPCs that are empty (containing no instances) that could be retired.
 
+* type: text contents: |-   # Lets get started
++
+That is the end of of your challenge briefing!
++
+Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[,100px] in the bottom right corner of this window.
+tabs:
 
-== *_OPTIONAL CHALLENGE_*
+* id: bsfxiwll5k9i title: Ansible Automation Controller type: service hostname: controller port: 443
+* id: nlyhx0kdcqrx title: AWS console type: service hostname: cloud-client path: / port: 80
+* id: lissmhaexvwm title: Dynamic Report type: service hostname: controller path: / port: 8088 difficulty: "" timelimit: 1500 enhanced_loading: null -- 👋 Introduction ===
++
+==== Estimated time to complete: _15 minutes_<p>
++
+Welcome to the third challenge.
+For this challenge we will create dynamic documentation through automation.
+More specifically, we will generate a HTML website using the structured data that we showcased in the previous challenge.
 
-Estimated time to complete: _15 minutes_
+Login to Ansible Automation Platform with the following credentials
 
-=== OPTIONAL - Terraform Basics
+[cols=2*]
+|===
+| username:
+| `admin`
 
-In this challenge you will learn
-* Basic use of Terraform to deploy cloud infrastructure in AWS cloud
+| password:
+| `ansible123!`
+|===
 
-=== Terraform Basics (OPTIONAL)
+= ☑️ Task 1 - Create a new Job Template
 
-Terraform is a great tool that uses Infrastructure as Code (IaC) to define infrastructure;
-build, change, and destroy these infrastructure resources.
+Click the *Templates* link in the left navigation menu underneath *Automation Execution \-> Templates* image:https://github.com/HichamMourad/awsinfravis25/blob/master/images/menu_templates.png?raw=true[templates link picture]
 
-This challenge will introduce you to some basic Terraform concepts and to give you some experience in using Terraform to create and destroy cloud infrastructure resources.
+* Now click on `+ Create Template` then scroll down and click  `Create job template` image:https://github.com/HichamMourad/awsinfravis25/blob/master/images/create_templates.png?raw=true[,600]
 
-NOTE: You can perform the following steps at the TERMINAL, or in Visual Studio Code (VSCode).
-In VSCode you can open a terminal prompt.
-Choose either the `TERMINAL` tab, or the `VSCODE` tab from the top of the lab screen.
-We will walk through the steps using the `TERMINAL` but please feel free to do this in the `VSCODE` tab if you are more comfortable there!
+Fill out the following fields:+++<table>++++++<tr>++++++<th>+++Parameter+++</th>++++++<th>+++Value+++</th>++++++</tr>+++
++++<tr>++++++<td>+++Name+++</td>++++++<td>+++Create Cloud Report+++</td>+++
++++<tr>++++++<td>+++Job Type+++</td>++++++<td>+++Run+++</td>+++
++++<tr>++++++<td>+++Inventory+++</td>++++++<td>+++Demo Inventory+++</td>+++
++++<tr>++++++<td>+++Project+++</td>++++++<td>+++AWS Demos Project+++</td>+++
++++<tr>++++++<td>+++Execution Environment+++</td>++++++<td>+++AWS Execution Environment+++</td>+++
++++<tr>++++++<td>+++Playbook+++</td>++++++<td>++++++<code>+++playbooks/cloud_report.yml+++</code>++++++</td>+++
++++<tr>++++++<td>+++Credentials+++</td>++++++<td>++++++<code>+++AWS_Credential+++</code>+++   AND   +++<code>+++SSH Controller Credential+++</code>++++++</td>+++
+</table>
 
-'''
+**Please NOTE, that this job template requires TWO credentials.  One to retrieve information from AWS, and the second to SSH to the report server and generate the cloud report**
 
-== ☑️ Task 1 - Initialize a Terraform Project
+* If you have trouble finding the `AWS_Credential` make sure you are looking under the Credential Type `Amazon Web Services`
 
-Open the `Terminal` tab from the top of the lab.
+Click the blue **Create Job Template** button.
 
-Change to the `/home/rhel/lab_exercises/1.Terraform_Basics` folder
+The project we are loading Ansible Playbooks from can be found here [https://github.com/ansible-cloud/aws_demos](https://github.com/ansible-cloud/aws_demos)
 
-[source,bash,role=execute]
-----
-cd /home/rhel/lab_exercises/1.Terraform_Basics
-----
+☑️ Task 2 - Add a survey
+===
 
-Here you will find a `main.tf` file which has been created for you.
+For this next step we are going to add a survey so the user can select where they want the HTML report hosted.  This allows the operator to select a Linux host to serve the HTML file for others to view!
 
-Take a quick look at this file
+Click the **Templates** link in the left navigation menu underneath **Automation Execution**.  You will see your `Create Cloud Report` job template.
+* Click the `Create Cloud Report` link to open the job template.
+* Now, click the `Survey` tab at the top of the job template.
 
-[source,bash,role=execute]
-----
-cat main.tf
-----
++++<img src="https://github.com/IPvSean/pictures_for_github/blob/master/survey_tab.png?raw=true" style="width:400px;margin-left:0px">++++++</img>+++
 
-It's content will look like the following:
+* Click the blue `Create survey question` button.
 
-[source,terraform]
-----
-# Use AWS provider for Terraform
-provider "aws" {
-  region = "us-east-1"
-}
+Fill out the following table:
++++<table>++++++<tr>++++++<th>+++Parameter+++</th>++++++<th>+++Value+++</th>++++++</tr>+++
++++<tr>++++++<td>+++Name+++</td>++++++<td>+++Which server do you want to host the report?+++</td>+++
+	+++<tr>++++++<td>+++Answer variable name+++</td>++++++<td>++++++<code>+++_hosts+++</code>++++++</td>+++
++++<tr>++++++<td>+++Answer type+++</td>++++++<td>+++Text+++</td>+++
+	+++<tr>++++++<td>+++Default answer+++</td>++++++<td>++++++<code>+++ansible-1+++</code>++++++</td>+++
+</table>
 
-resource "aws_instance" "basic_rhel" {
-  ami           = "ami-0005e0cfe09cc9050"
-  instance_type = "t2.micro"
+Click the blue  **Create survey question** to **Save** the Survey.
 
-  }
-----
+Make sure to click the toggle button to enabled the survey.
++++<img src="https://github.com/HichamMourad/awsinfravis25/blob/master/images/survey_toggle_short.png?raw=true" style="width:600px;margin-left:0px">++++++</img>+++
 
-In this simple example, the `main.tf` file will declare a few things.
+For lab purposes we are just going to host it on the host **+++<code>+++ansible-1+++</code>+++** but we are showing how this can be easily configurable by the administrator to allow you to choose anywhere to host dynamic documentaition.  For example we can use Amazon S3 and host it there.
 
-* A *provider* for Terraform to work with.
-In this example the Terraform Provider in use is for AWS (Terraform Provider for AWS)
-* A *resource* to indicate the type of infrastructure resource, what AWS Machine Image (ami), and what instance type to use
+☑️ Task 3 - Launch the Job Template
+===
 
-Initialize the Terraform Project using the following command
+Click the **Templates** link in the left navigation menu underneath **Automation Execution**.  You will see your `Create Cloud Report` job template.
 
-[source,bash,role=execute]
-----
-terraform init
-----
+Click the rocket symbol to `Launch Template`.
++++<img src="https://github.com/IPvSean/pictures_for_github/blob/master/launch_job.png?raw=true" style="width: 30px;margin-left:0px">++++++</img>+++
 
-This will get Terraform to download and provision the backend with what it needs for the chosen AWS provider.
+Select the host:  **`ansible-1`**
 
-Once this is done, run the following command
+Click **Next** and then **Finish** to launch the job template.
 
-[source,bash,role=execute]
-----
-ls -al
-----
+## Explanation:
+##
+This playbook has two roles.
 
-You will see the following has been created:
+1. The first role will retrieve structured data for VPCs, EC2 instances and IGWs as shown in the previous challenge.  A link to the source code can be [found here](https://github.com/ansible-cloud/aws_demos/tree/master/roles/retrieve_info)
 
-* _.terraform_  _- This provides the backend requirements for Terraform_
-* _.terraform.lock.hcl_ - _This is the dependency lock file_
+2. The 2nd role will create an HTML report.  This will install a web server, copy over CSS and images, and template out the structured data into an HTML website.  A link to the source code can be [found here](https://github.com/ansible-cloud/aws_demos/tree/master/roles/build_report).
 
-Now that you have initialized this Terraform Project, go ahead and build the resource(s)!
+When the job completes click the `Dynamic Report` tab at the top of your lab window.  The report will be generated.
 
-'''
+**Make sure to refresh the window using the** +++<font size="14px">+++⟳+++</font>+++
 
-== ☑️ Task 2 - Plan and Apply the Terraform Project
+Click on the gray boxes with the caret `>` to expand the tables with additional information.
 
-From the project folder you have already initialized Terraform and you can now deploy, by running the `terraform plan`, then `terraform apply` commands
+You will see a report similar to the following:
+![picture of report](https://github.com/IPvSean/pictures_for_github/blob/master/cloud_report.png?raw=true)
 
-[source,bash,role=execute]
-----
-terraform plan -out myMagicalInstance
-----
 
-This creates a plan of your build based on the `main.tf` file you have.
-You can look at the output and see all the components being added (+) to the infrastructure plan.
+☑️ Task 4 - Compare Regions
+===
 
-Next let's get Terraform to provision this plan
+A cloud operator can quickly see how many instances are online in that region, and what VPCs they are on, as well as the associated IGW.  This is combining several info modules which correspond to multiple AWS boto3 API calls.  In the cloud report we can quickly gain awareness of the cloud footprint.
 
-[source,bash,role=execute]
-----
-terraform apply myMagicalInstance
-----
+Important considerations for a cloud operator:
 
-Terraform will now create the infrastructure you have defined in your manifest.
-You will notice that the number of resources created should reflect the number of resources specified.
+- How can I identify VPCs in Amazon EC2 that are not in use and can be safely deleted to free up resources for my team to provision additional VPCs?
+- Which regions are running instances versus which ones that are empty?
+- Which regions have stopped instances that may turn on at any moment?
 
-Run the following AWS cli command to check for running instances and to get the `instance ID`.
-Simply copy and paste this command to the terminal prompt
 
-[source,bash,role=execute]
-----
-aws ec2 describe-instances --filters "Name=instance-type,Values=t2.micro" --query "Reservations[*].Instances[*].[InstanceId]" --output table --region "us-east-1"
-----
+✅ Finished!
+===
+Press the `Check` button below to check your work.
 
-image::https://github.com/HichamMourad/terraform-aap/blob/main/images/basics1.png?raw=true[]
+🐛 Encountered an issue?
+====
 
-NOTE: *Note that you may see more than 1 instance, and that's becasue of the infrastructure you created in earlier challenges in this lab.*
-
-Now, if you wanted to get detailed information about the AWS instance from Terraform you can look in the Terraform state file.
-
-[source,bash,role=execute]
-----
-cat terraform.tfstate
-----
-
-Here you will see only the resources created (1 ec2 instance) by this Terraform project.
-This file provides you with a wealth of information regarding the infrastructure that was just provisioned.
-
-*_OPTIONAL:  Login to the `AWS Console` using the tab at the top of the lab to view the resource(s) created in AWS._*
-
-'''
-
-== ☑️ Task 3 - Make Changes to the Terraform Project
-
-You have created and deployed your first AWS instance with a simple Terraform project.
-What if you want to make a change of some sort?
-
-Edit the `main.tf` file and add more resources.
-*Add a security group for example, and specify ports for ingess and egress.*.
-
-[source,bash,role=execute]
-----
-vim main.tf
-----
-
-[source,terraform,role=execute]
-----
-resource "aws_security_group" "terraform_group" {
-  name = "myMagicalSecGroup"
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-}
-
-  ingress {
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-}
-
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-}
-}
-----
-
-Once you have made the these ADDITIONS, you will need to run `terraform plan` to update the plan.
-This will output the needed changes.
-
-[source,bash,role=execute]
-----
-terraform plan --out myMagicalInstance
-----
-
-You will notice in the summary that the changes have been indicated with - and + for what has been added taken away.
-Please go ahead and apply the change.
-
-Example output:  `Plan: 1 to add, 0 to change, 0 to destroy.`
-
-[source,bash,role=execute]
-----
-terraform apply myMagicalInstance
-----
-
-Terraform will make changes and add the additional resources specified by your `main.tf` file changes/additions.
-
-*_OPTIONAL:  Login to the `AWS Console` using the tab at the top of the lab to view the modifications that took place.
-The addition of the security group and the ingress / egress ports._*
-
-'''
-
-== ☑️ Task 4 - Deprovisioning resources of a Terraform Project
-
-Terraform makes it really simple to `clean up / remove / deprovision` the project resources.
-Since you no longer need these resources, please destroy the infrastructure resources created by the Terraform project.
-Terraform will use the build files which act as a source of truth to de-provision all infrastructure and resources.
-
-[source,bash,role=execute]
-----
-terraform destroy
-----
-
-You will be prompted if you want to continue, please enter `yes`.
-
-Momentarily you will see confirmation of the resources destruction (1 ec2 instance, and 1 security group).
-
-image::https://github.com/HichamMourad/terraform-aap/blob/main/images/basics2.png?raw=true[]
-
-*_OPTIONAL:  Login to the `AWS Console` and validate that the AWS resource(s) have been deleted._*
-
-This concludes the Terraform Basics challenge
+If you have encountered an issue or have noticed something not quite right, please [open an issue](https://github.com/ansible/instruqt/issues/new?title=Issue+with+Ansible+Hybrid+Cloud+Automation+-+Infrastructure+visibility+(aap2.5)&assignees=hichammourad).+++</tr>++++++</tr>++++++</tr>++++++</tr>++++++</table>++++++</tr>++++++</tr>++++++</tr>++++++</tr>++++++</tr>++++++</tr>++++++</tr>++++++</table>+++
