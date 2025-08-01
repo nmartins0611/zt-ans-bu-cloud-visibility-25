@@ -46,9 +46,6 @@ tee /tmp/setup.yml << EOF
   gather_facts: false
   become: true
   vars:
-    username: admin
-    admin_password: ansible123!
-    ansible_host: controller.${_SANDBOX_ID}.svc.cluster.local
     aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') | default('AWS_ACCESS_KEY_ID_NOT_FOUND', true) }}"
     aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') | default('AWS_SECRET_ACCESS_KEY_NOT_FOUND', true) }}"
     aws_default_region: "{{ lookup('env', 'AWS_DEFAULT_REGION') | default('AWS_DEFAULT_REGION_NOT_FOUND', true) }}"
@@ -107,7 +104,7 @@ tee /tmp/setup.yml << EOF
         organization: "Default"
         state: present
         scm_type: git
-        scm_url: https://github.com/HichamMourad/awsoptimize25
+        scm_url: https://gitea:3000/awsoptimize25
         default_environment: "Default execution environment"
         controller_host: "https://localhost"
         controller_username: admin
