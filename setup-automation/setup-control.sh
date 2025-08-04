@@ -113,7 +113,7 @@ cat <<EOF | tee /tmp/setup.yml
         organization: "Default"
         state: present
         scm_type: git
-        scm_url: https://github.com/HichamMourad/awsoptimize25.git
+        scm_url: https://github.com/ansible-tmm/awsoptimize25.git
         default_environment: "Default execution environment"
         controller_host: "https://localhost"
         controller_username: admin
