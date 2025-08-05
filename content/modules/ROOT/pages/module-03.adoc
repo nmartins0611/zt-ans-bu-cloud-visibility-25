@@ -1,32 +1,4 @@
-:doctype: book
-
-'''
-
-slug: cloudreport id: o4z20tq1onvl type: challenge title: Creating Dynamic Documentation teaser: Create a dynamic HTML website out of your public cloud structured data notes:
-
-* type: text contents: |-   # Challenge summary
-+
-In this challenge we will create Dynamic Documentation.
-Public cloud enviornments are often being used by many different teams and invidiuals.
-By using automation we can quickly get a 'lay of the land' and then generate easy-to-read HTML, markdown, CSV files or whatever our team requires.
-Specifically, in this challenge we will create an HTML website from some pre-made Ansible roles.
-
-* type: text contents: |-   # Example dynamic documentation
-+
-image::https://github.com/IPvSean/pictures_for_github/blob/master/big_cloud_report.png?raw=true[example picture of report]
-+
-In this report it is really easy for the cloud operator to see there are several VPCs that are empty (containing no instances) that could be retired.
-
-* type: text contents: |-   # Lets get started
-+
-That is the end of of your challenge briefing!
-+
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[,100px] in the bottom right corner of this window.
-tabs:
-
-* id: bsfxiwll5k9i title: Ansible Automation Controller type: service hostname: controller port: 443
-* id: nlyhx0kdcqrx title: AWS console type: service hostname: cloud-client path: / port: 80
-* id: lissmhaexvwm title: Dynamic Report type: service hostname: controller path: / port: 8088 difficulty: "" timelimit: 1500 enhanced_loading: null -- 👋 Introduction ===
+👋 Introduction ===
 +
 ==== Estimated time to complete: _15 minutes_<p>
 +
