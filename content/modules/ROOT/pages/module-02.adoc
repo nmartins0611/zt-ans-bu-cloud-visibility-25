@@ -1,44 +1,4 @@
-:doctype: book
-
-'''
-
-slug: hybrid-cloud-info-module id: 684nja8loslv type: challenge title: Retrieve public cloud information teaser: Create job templates in Ansible Automation Platform to retrieve public cloud   structured data notes:
-
-* type: text contents: |-   # Challenge summary
-+
-In this challenge, you'll perform automation against your AWS public cloud environment.
-You will also learn how to create a `Job Template` in Ansible Automation Platform.
-+
-You will launch a number of job templates to perform the following:
-
- ** Retrieve information about VPCs (https://docs.aws.amazon.com/vpc/latest/userguide/configure-your-vpc.html[Virtual Private Cloud])
- ** Retrieve information about EC2 instances (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html[virtual computing environments]
- ** Retrieve information about IGWs (https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html[internet gateways])
-
-* type: text contents: |-   # Infrastructure visibility
-+
-Cloud automation begins and ends with structured data.
-Ansible Automation Platform can help retrieve information from your public cloud to help you understand your cloud footprint.
-+
-image::https://github.com/IPvSean/pictures_for_github/blob/master/visbility.png?raw=true[]
-
-* type: text contents: |+   # Understanding Job Templates
-+
-A job template is a definition and set of parameters for running an Automation job.
-Job templates are useful to execute the same job many times.
-Job templates also encourage the reuse of Ansible playbook content and collaboration between teams.
-+
-image::https://github.com/IPvSean/pictures_for_github/blob/master/job_template.png?raw=true[]
-
-* type: text contents: |-   # Lets get started
-+
-That is the end of of your challenge briefing!
-+
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[,100px] in the bottom right corner of this window.
-tabs:
-
-* id: mtbxdirtaaku title: Ansible Automation Controller type: service hostname: controller port: 443
-* id: pf9ny3c8epsq title: AWS console type: service hostname: cloud-client path: / port: 80 difficulty: "" timelimit: 900 enhanced_loading: null -- 👋 Introduction ===
+👋 Introduction ===
 +
 ==== Estimated time to complete: _20 minutes_<p>
 +
