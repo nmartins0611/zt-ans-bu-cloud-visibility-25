@@ -6,7 +6,7 @@ nav:
 
 asciidoc:
   attributes:
-    lab_name: "Terraform & Red Hat Ansible Automation Platform (AAP 2.5)"
+    lab_name: "Hybrid cloud automation: AWS Infrastructure visibility (AAP 2.5)"
     release-version: master
     page-pagination: true
     my_var: "foo"
