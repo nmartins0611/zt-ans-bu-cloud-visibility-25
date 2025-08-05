@@ -9,15 +9,15 @@ echo "192.168.1.10 control.lab control" >> /etc/hosts
 
 echo "%rhel ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/rhel_sudoers
 chmod 440 /etc/sudoers.d/rhel_sudoers
-sudo -u rhel mkdir -p /home/rhel/.ssh
-sudo -u rhel chmod 700 /home/rhel/.ssh
-sudo -u rhel ssh-keygen -t rsa -b 4096 -C "rhel@$(hostname)" -f /home/rhel/.ssh/id_rsa -N "" -q
-sudo -u rhel chmod 600 /home/rhel/.ssh/id_rsa*
+# sudo -u rhel mkdir -p /home/rhel/.ssh
+# sudo -u rhel chmod 700 /home/rhel/.ssh
+# sudo -u rhel ssh-keygen -t rsa -b 4096 -C "rhel@$(hostname)" -f /home/rhel/.ssh/id_rsa -N "" -q
+# sudo -u rhel chmod 600 /home/rhel/.ssh/id_rsa*
 
 
-# Set proper ownership and permissions
-chown rhel:rhel /home/rhel/aws/config
-chmod 600 /home/rhel/aws/config
+# # Set proper ownership and permissions
+# chown rhel:rhel /home/rhel/aws/config
+# chmod 600 /home/rhel/aws/config
 
 # nmcli connection add type ethernet con-name enp2s0 ifname enp2s0 ipv4.addresses 192.168.1.10/24 ipv4.method manual connection.autoconnect yes
 # nmcli connection up enp2s0
