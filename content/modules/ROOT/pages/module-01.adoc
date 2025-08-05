@@ -1,55 +1,5 @@
-:doctype: book
-
-'''
-
-slug: controller id: mcu4hbq03v3j type: challenge title: Understanding and using Automation controller teaser: Setup dynamic inventory in automation controller for AWS EC2 notes:
-
-* type: text contents: |-   Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[,100px] on the _bottom right corner_ if it did not already start creating the lab environment.
-+
-+
-To begin your lab briefing click the white `>` on the right\->
-
-* type: text contents: |   # Automation controller
-+
-The control plane for Ansible Automation Platform is the automation controller.+++<center>+++<img src="https://github.com/IPvSean/pictures_for_github/blob/master/automation_controller.png?raw=true" width=600px%>+++</center>+++
-+
-Automation controller helps standardize how automation is deployed, initiated, delegated, and audited, allowing enterprises to automate with confidence while reducing sprawl and variance.
-Manage inventory, launch and schedule workflows, track changes, and integrate into reporting, all from a centralized user interface and RESTful API.
-
-* type: text contents: |+   # Inventories
-+
-An Inventory is a collection of hosts against which automation jobs may be launched, the same as an Ansible inventory file.
-Inventories are divided into groups and these groups contain the actual hosts.
-Groups may be sourced manually, by entering host names into the automation controller, or from one of its supported cloud providers.
-+
-# Inventory Plugins
-+
-There is a variety of pre-built Inventory Plugins that are available:
-
- ** Amazon Web Services EC2
- ** Google Compute Engine
- ** Microsoft Azure Resource Manager
- ** VMware vCenter
-
-* type: text contents: |-   Example of configuring AWS inventory source:
-+
-image::https://docs.ansible.com/automation-controller/latest/html/userguide/_images/inventories-create-source-AWS-example.png[picture of AWS inventory]
-
-* type: text contents: |-   # Lab Diagram
-+
-Here is a diagram of the lab topology.+++<center>+++image:https://github.com/IPvSean/pictures_for_github/blob/master/aws-diagram.png?raw=true[,600px]+++</center>+++
-+
-There is one automation controller node, and two Red Hat Enterprise Linux nodes running in Amazon Web Services (AWS) Elastic Cloud (EC2).
-
-* type: text contents: |-   # Lets get started
-+
-That is the end of of your lab briefing!
-+
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[,100px] in the bottom right corner of this window.
-tabs:
-
-* id: ghytxtnegpww title: Automation Controller type: service hostname: controller port: 443
-* id: bmg0gonmktjg title: AWS console type: service hostname: cloud-client path: / port: 80 difficulty: "" timelimit: 300 enhanced_loading: null -- 👋 Introduction ===
+👋 Introduction 
+===
 +
 ==== Estimated time to complete: _10 minutes_<p>
 +
