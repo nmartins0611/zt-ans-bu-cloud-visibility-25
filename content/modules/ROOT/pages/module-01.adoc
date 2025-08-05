@@ -1,133 +1,172 @@
-👋 Introduction 
-===
-+
-==== Estimated time to complete: _10 minutes_<p>
-+
-Welcome to the `Ansible Hybrid Cloud Automation - Infrastructure visibility lab`.
-In the following challenges and tasks we will guide you in understanding Infrastructure visibility use case.
-In this first challenge, you will learn about setting up a dynamic inventory for AWS EC2 in automation controller.
+= Lab Guide: Ansible Dynamic Inventory for AWS
+:toc:
+:toc-title: Table of Contents
+:sectnums:
+:icons: font
 
-Login to Ansible Automation Platform UI with the following credentials
+An overview of setting up a dynamic inventory for AWS EC2 within the automation controller.
 
-[cols=2*]
+*Estimated time to complete: 10 minutes*
+
+---
+
+== Lab Overview
+
+Welcome to the `Ansible Hybrid Cloud Automation - Infrastructure Visibility` lab. In this guide, you will learn how to set up and use a dynamic inventory for AWS EC2 in the automation controller.
+
+First, log in to the Ansible Automation Platform UI with the following credentials.
+
+.Login Credentials
+[cols="1,2a"]
 |===
-| username:
-| `admin`
-
-| password:
-| `ansible123!`
+| Username | `admin`
+| Password | `ansible123!`
 |===
 
-= ☑️ Task 1 - Understanding credentials
+---
 
-Credentials are utilized for authentication when launching Jobs against machines, synchronizing with inventory sources, and importing project content from a version control system.
-In this lab, we have two different credentials:
+== Task 1: Understanding Credentials
 
-* *RHEL on AWS - SSH KEY* - This is an SSH key for the two Red Hat Enterprise Linux hosts running on AWS
-* *AWS_Credential* - This is the AWS credential for performing actions on AWS cloud.
-For example, creating a VPC, or shutting down an instance.
+Credentials are used for authentication when launching Jobs against machines, synchronizing with inventory sources, and importing project content from version control systems. In this lab, we use two pre-configured credentials:
 
-In the *Controller* tab at the top of your window click on the *Credentials* link under *Automation Execution \-> Infrastructure \-> Credentials* to examine the two pre-configured credentials.
-Login with the admin credentials provided above.
+* **RHEL on AWS - SSH KEY:** An SSH key for connecting to the Red Hat Enterprise Linux hosts running on AWS.
+* **AWS_Credential:** An AWS credential for performing actions on the AWS cloud, such as creating a VPC or managing instances.
 
-*Note* The keys are encrypted so no one, not even an administrator, can see the key once it has been placed in automation controller.
+. **Navigate to the Credentials menu.**
++
+In the Controller UI, go to the left navigation menu and select *Infrastructure* → *Credentials*.
++
+NOTE: Credential keys are encrypted. Once entered into the automation controller, no one, including administrators, can view the sensitive values.
 
-= ☑️ Task 2 - Creating an Inventory
+---
 
-Click on the *Controller* tab at the top of lab.
-Click on the *Inventories* link under the *Automation Execution \-> Infrastructure \-> Inventories* group on the left navigation menu.
-Now, click the blue *Create Inventory* button and select *Create Inventory*.
+== Task 2: Creating an Inventory
 
-image::https://github.com/HichamMourad/awsinfravis25/blob/master/images/create_inventory.png?raw=true[,600]
+In this task, you will create a new inventory to hold your dynamically discovered hosts from AWS.
 
-Fill out the following fields:+++<table>++++++<tr>++++++<th>+++Parameter+++</th>++++++<th>+++Value+++</th>++++++</tr>+++
-+++<tr>++++++<td>+++Name+++</td>++++++<td>+++AWS Inventory+++</td>+++
-+++<tr>++++++<td>+++Organization+++</td>++++++<td>+++Default+++</td>+++
-</table>
+. **Navigate to the Inventories menu.**
++
+From the left navigation menu, select *Infrastructure* → *Inventories*.
 
-Click the blue **Create Inventory** button to save the inventory.
+. **Initiate inventory creation.**
++
+Click the blue *Create inventory* button and select *Create inventory*.
++
+image::https://github.com/HichamMourad/awsinfravis25/blob/master/images/create_inventory.png?raw=true[Create a new inventory, 600, opts="border"]
 
-☑️ Task 3 - Creating an Inventory Source
-===
+. **Enter the inventory details.**
++
+Fill out the form with the following information:
++
+[cols="1,1"]
+|===
+| Parameter | Value
+| Name | `AWS Inventory`
+| Organization | `Default`
+|===
 
-Now that you have created the **AWS Inventory** click on the **Sources** tab at the top of the inventory.
+. **Save the inventory.**
++
+Click the blue *Create inventory* button.
 
-+++<img src="https://github.com/IPvSean/pictures_for_github/blob/master/sources-savage.png?raw=true" style="width:300px;margin-left:0px">++++++</img>+++
+---
 
-Now click the blue **Create Source** button.
+== Task 3: Creating an Inventory Source
 
-Fill out the following fields:
+Now you will configure a source to dynamically pull host information from your AWS account into the inventory you just created.
 
-+++<table>++++++<tr>++++++<th>+++Parameter+++</th>++++++<th>+++Value+++</th>++++++</tr>+++
-+++<tr>++++++<td>+++Name+++</td>++++++<td>+++AWS Source+++</td>+++
-+++<tr>++++++<td>+++Source+++</td>++++++<td>+++Amazon EC2+++</td>+++
-</table>
+. **Navigate to the Sources tab.**
++
+Within your newly created `AWS Inventory`, click the *Sources* tab at the top.
++
+image::https://github.com/IPvSean/pictures_for_github/blob/master/sources-savage.png?raw=true[Inventory Sources Tab, 300, opts="border"]
 
-Once you select **Amazon EC2** more choices will pop up.  Fill out the following field:
+. **Initiate source creation.**
++
+Click the blue *Create source* button.
 
-+++<table>++++++<tr>++++++<th>+++Parameter+++</th>++++++<th>+++Value+++</th>++++++</tr>+++
-+++<tr>++++++<td>+++Credential+++</td>++++++<td>+++AWS_Credential+++</td>+++
-</table>
+. **Enter the source details.**
++
+Fill out the form with the following information:
++
+[cols="1,1"]
+|===
+| Parameter | Value
+| Name | `AWS Source`
+| Source | `Amazon EC2`
+|===
 
-Click the **drop-down**, then select the **Browse** button Select the **radio button** next to `AWS_Credential`, then click **Confirm**.
+. **Configure the source credential.**
++
+After selecting `Amazon EC2` as the source, more options will appear. Find the *Credential* field.
++
+[cols="1,1"]
+|===
+| Parameter | Value
+| Credential | `AWS_Credential`
+|===
++
+TIP: You may need to click the search icon (magnifying glass) to browse and select the `AWS_Credential`.
 
-Click **Create Source**
+. **Save the source.**
++
+Click the blue *Create source* button.
 
-Now click **Launch Inventory Update** in the top right to retrieve the inventory from AWS EC2.
+. **Launch the inventory sync.**
++
+Click the *Sync* button in the top right to retrieve the host inventory from AWS EC2.
 
-☑️ Task 4 - Examine the Inventory
-===
+---
 
-For this task we will examine the inventory then run an ad-hoc job.  Click on the **AWS Inventory** link to return to the top-level menu for the AWS Inventory.
+== Task 4: Examining the Inventory
 
-+++<img src="https://github.com/IPvSean/pictures_for_github/blob/master/aws_inventory_menu.png?raw=true" style="width:400px;margin-left:0px">++++++</img>+++
+For this final task, we will examine the hosts that were added to the inventory and then run an ad-hoc command to verify connectivity.
 
-Now click on **Hosts**.  There will be two hosts listed with their name pre-pended with **ec2**.  These were dynamically pulled from AWS via the Inventory Plugin we just setup.  Click the checkmark next to each host then click the **Run Command** button.  Fill out the following fields:
+. **Return to the Hosts view.**
++
+Click the *Hosts* tab. You should now see two hosts listed, dynamically pulled from AWS.
++
+image::https://github.com/IPvSean/pictures_for_github/blob/master/aws_inventory_menu.png?raw=true[AWS Inventory Menu, 400, opts="border"]
 
-### **Details**:
-+++<table>++++++<tr>++++++<th>+++Parameter+++</th>++++++<th>+++Value+++</th>++++++</tr>+++
-+++<tr>++++++<td>+++Module+++</td>++++++<td>+++ping+++</td>+++
-</table>
+. **Run an ad-hoc command.**
++
+Select the checkbox next to each host and click the *Run command* button. A wizard will appear.
 
-Click **Next**
+. **Configure the command details.**
++
+--
+* **Module:** `ping`
+* Click *Next*.
+--
 
-+++<hr>++++++</hr>+++
+. **Select the Execution Environment.**
++
+--
+* Select *Default execution environment*.
+* Click *Next*.
+--
 
-### **Execution Environment**:
+. **Select the machine credential.**
++
+--
+* Select *RHEL on AWS - SSH KEY*. (You may have to browse to find it).
+* Click *Next*.
+--
 
-Select
-* **Default execution environment**
+. **Launch the job.**
++
+Review the details on the *Preview* screen and click the *Finish* button.
++
+The ad-hoc command runs the Ansible link:https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html[ping] module, which verifies SSH connectivity between the control node and the two RHEL EC2 instances. The output should show a "SUCCESS" status.
++
+image::https://github.com/HichamMourad/awsinfravis25/blob/master/images/ping_output.png?raw=true[Successful ping command output, 600, opts="border"]
 
-Click **Next**
+---
 
-+++<hr>++++++</hr>+++
+== Next Steps
 
-### **Credential**:
+You have successfully completed this lab. Press the `Check` button in the lab environment to proceed to the next challenge.
 
-Select
-* **RHEL on AWS - SSH KEY** (You may have to select the **Browse** button to search for the credential)
+== Troubleshooting
 
-Click **Next**
-
-+++<hr>++++++</hr>+++
-
-### **Preview**
-
-Press the **Finish** button.
-
-The **Successful output" should look like the following.
-+++<img src="https://github.com/HichamMourad/awsinfravis25/blob/master/images/ping_output.png?raw=true" style="width:600px;margin-left:0px">++++++</img>+++
-
-+++<hr>++++++</hr>+++
-
-
-The ad-hoc PING test will setup an Ansible +++<a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html" target="_new">+++ping+++</a>+++ task which will verify we have SSH connectivity between our control node and the two RHEL ec2 instances running on AWS.
-
-✅ Next Challenge
-===
-Press the `Check` button below to go to the next challenge once you've completed the task.
-
-🐛 Encountered an issue?
-====
-
-If you have encountered an issue or have noticed something not quite right, please [open an issue](https://github.com/ansible/instruqt/issues/new?title=Issue+with+Ansible+Hybrid+Cloud+Automation+-+Infrastructure+visibility+(aap2.5)&assignees=hichammourad).+++</tr>++++++</table>++++++</tr>++++++</table>++++++</tr>++++++</tr>++++++</table>++++++</tr>++++++</tr>++++++</table>+++
+If you have encountered an issue or have noticed something not quite right, please link:https://github.com/ansible/instruqt/issues/new?title=Issue+with+Ansible+Hybrid+Cloud+Automation+-+Infrastructure+visibility+(aap2.5)&assignees=hichammourad[open an issue on GitHub].
