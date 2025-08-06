@@ -174,39 +174,39 @@ cat <<EOF | tee /tmp/setup.yml
         - { playbook: 'playbooks/aws_resources.yml', name: 'Create AWS Resources' }
         - { playbook: 'playbooks/aws_instances.yml', name: 'Create AWS Instances' }
 
-    # - name: Launch a job template
-    #   ansible.controller.job_launch:
-    #     job_template: "Create AWS Resources"
-    #     controller_host: "https://localhost"
-    #     controller_username: admin
-    #     controller_password: ansible123!
-    #     validate_certs: false
-    #   register: job
+    - name: Launch a job template
+      ansible.controller.job_launch:
+        job_template: "Create AWS Resources"
+        controller_host: "https://localhost"
+        controller_username: admin
+        controller_password: ansible123!
+        validate_certs: false
+      register: job
 
-    # - name: Wait for job to finish
-    #   ansible.controller.job_wait:
-    #     job_id: "{{ job.id }}"
-    #     controller_host: "https://localhost"
-    #     controller_username: admin
-    #     controller_password: ansible123!    
-    #     validate_certs: false
+    - name: Wait for job to finish
+      ansible.controller.job_wait:
+        job_id: "{{ job.id }}"
+        controller_host: "https://localhost"
+        controller_username: admin
+        controller_password: ansible123!    
+        validate_certs: false
 
-    # - name: Launch a job template
-    #   ansible.controller.job_launch:
-    #     job_template: "Create AWS Instances"
-    #     controller_host: "https://localhost"
-    #     controller_username: admin
-    #     controller_password: ansible123!
-    #     validate_certs: false
-    #   register: job2
+    - name: Launch a job template
+      ansible.controller.job_launch:
+        job_template: "Create AWS Instances"
+        controller_host: "https://localhost"
+        controller_username: admin
+        controller_password: ansible123!
+        validate_certs: false
+      register: job2
 
-    # - name: Wait for job2 to finish
-    #   ansible.controller.job_wait:
-    #     job_id: "{{ job2.id }}"
-    #     controller_host: "https://localhost"
-    #     controller_username: admin
-    #     controller_password: ansible123!   
-    #     validate_certs: false
+    - name: Wait for job2 to finish
+      ansible.controller.job_wait:
+        job_id: "{{ job2.id }}"
+        controller_host: "https://localhost"
+        controller_username: admin
+        controller_password: ansible123!   
+        validate_certs: false
 
     - name: Add an AWS INVENTORY
       ansible.controller.inventory:
