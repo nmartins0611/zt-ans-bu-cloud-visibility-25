@@ -241,15 +241,15 @@ cat <<EOF | tee /tmp/setup.yml
         controller_password: ansible123!
         validate_certs: false
 
-    - name: Update a single inventory source
-      ansible.controller.inventory_source_update:
-        name: "AWS Source"
-        inventory: "AWS Inventory"
-        organization: "Default"
-        controller_host: "https://localhost"
-        controller_username: admin
-        controller_password: ansible123!
-        validate_certs: false
+    # - name: Update a single inventory source
+    #   ansible.controller.inventory_source_update:
+    #     name: "AWS Source"
+    #     inventory: "AWS Inventory"
+    #     organization: "Default"
+    #     controller_host: "https://localhost"
+    #     controller_username: admin
+    #     controller_password: ansible123!
+    #     validate_certs: false
 
     - name: Add ansible-1 host
       ansible.controller.host:
