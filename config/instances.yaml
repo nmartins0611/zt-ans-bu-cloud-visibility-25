@@ -93,12 +93,12 @@ virtualmachines:
             protocol: TCP
             targetPort: 443
             name: control-https
-      - name: control-report
-        ports:
-          - port: 8088
-            protocol: TCP
-            targetPort: 8088
-            name: control-report
+      # - name: control-report
+      #   ports:
+      #     - port: 8088
+      #       protocol: TCP
+      #       targetPort: 8088
+      #       name: control-report
     routes:
       - name: control-https
         host: control
@@ -141,10 +141,10 @@ virtualmachines:
           fH5qke1XR5LFGpndX1GuSVBhdZq94x0aGXWTQCDNIPQ3QtrQ64PBF1vRFdJ6o/FI
           uEOWpQhGYHMC0A==
           -----END CERTIFICATE-----
-      - name: control-report
-        host: control
-        service: control-report
-        targetPort: 8088
-        tls: true
-        tls_termination: Edge
+      # - name: control-report
+      #   host: control
+      #   service: control-report
+      #   targetPort: 8088
+      #   tls: true
+      #   tls_termination: Edge
  
