@@ -208,38 +208,38 @@ cat <<EOF | tee /tmp/setup.yml
         controller_password: ansible123!   
         validate_certs: false
 
-    - name: Add an AWS INVENTORY
-      ansible.controller.inventory:
-        name: "AWS Inventory"
-        description: "Our AWS Inventory"
-        organization: "Default"
-        state: present
-        controller_host: "https://localhost"
-        controller_username: admin
-        controller_password: ansible123!
-        validate_certs: false
+    # - name: Add an AWS INVENTORY
+    #   ansible.controller.inventory:
+    #     name: "AWS Inventory"
+    #     description: "Our AWS Inventory"
+    #     organization: "Default"
+    #     state: present
+    #     controller_host: "https://localhost"
+    #     controller_username: admin
+    #     controller_password: ansible123!
+    #     validate_certs: false
 
-    - name: Add an AWS InventorySource
-      ansible.controller.inventory_source:
-        name: "AWS Source"
-        description: "Source for the AWS Inventory"
-        inventory: "AWS Inventory"
-        credential: "AWS_Credential"
-        source: ec2
-        overwrite: "True"
-        update_on_launch: "True"
-        organization: "Default"
-        source_vars:
-          private: "false"
-          hostnames:
-            - 'tag:Name'
-          compose: 
-            ansible_host: public_ip_address
-        state: present
-        controller_host: "https://localhost"
-        controller_username: admin
-        controller_password: ansible123!
-        validate_certs: false
+    # - name: Add an AWS InventorySource
+    #   ansible.controller.inventory_source:
+    #     name: "AWS Source"
+    #     description: "Source for the AWS Inventory"
+    #     inventory: "AWS Inventory"
+    #     credential: "AWS_Credential"
+    #     source: ec2
+    #     overwrite: "True"
+    #     update_on_launch: "True"
+    #     organization: "Default"
+    #     source_vars:
+    #       private: "false"
+    #       hostnames:
+    #         - 'tag:Name'
+    #       compose: 
+    #         ansible_host: public_ip_address
+    #     state: present
+    #     controller_host: "https://localhost"
+    #     controller_username: admin
+    #     controller_password: ansible123!
+    #     validate_certs: false
 
     # - name: Update a single inventory source
     #   ansible.controller.inventory_source_update:
