@@ -84,6 +84,27 @@ cat <<EOF | tee /tmp/setup.yml
     aws_default_region: "{{ lookup('env', 'AWS_DEFAULT_REGION') | default('AWS_DEFAULT_REGION_NOT_FOUND', true) }}"
 
   tasks:
+
+    - name: Create ssh key pair
+      amazon.aws.ec2_key:
+        region: "{{ ec2_region | default('us-east-1') }}"
+        name: "ansible-demo"
+      register: create_key
+
+    - name: Add machine credential
+      ansible.controller.credential:
+        name: "RHEL on AWS - SSH KEY"
+        description: "Machine Credential for AWS instances"
+        organization: "{{ organization | default('Default') }}"
+        credential_type: Machine
+        inputs:
+          username: ec2-user
+          # Use the variable directly instead of the file lookup
+          ssh_key_data: "{{ create_key.key.private_key }}"
+          controller_host: "https://control"
+          controller_username: admin
+          controller_password: ansible123!
+        validate_certs: false
   
     - name: Add SSH Controller credential to automation controller
       ansible.controller.credential:
