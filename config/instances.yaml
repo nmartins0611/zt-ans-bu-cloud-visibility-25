@@ -93,12 +93,12 @@ virtualmachines:
             protocol: TCP
             targetPort: 443
             name: control-https
-       - name: control-report
-         ports:
-           - port: 8088
-             protocol: TCP
-             targetPort: 8088
-             name: control-report
+      - name: control-report
+        ports:
+          - port: 8088
+            protocol: TCP
+            targetPort: 8088
+            name: control-report
     routes:
       - name: control-https
         host: control
