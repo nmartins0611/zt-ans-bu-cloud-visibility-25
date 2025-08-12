@@ -84,27 +84,6 @@ cat <<EOF | tee /tmp/setup.yml
     aws_default_region: "{{ lookup('env', 'AWS_DEFAULT_REGION') | default('AWS_DEFAULT_REGION_NOT_FOUND', true) }}"
 
   tasks:
-
-    - name: Create ssh key pair
-      amazon.aws.ec2_key:
-        region: "{{ ec2_region | default('us-east-1') }}"
-        name: "ansible-demo"
-      register: create_key
-
-    - name: Add machine credential
-      ansible.controller.credential:
-        name: "RHEL on AWS - SSH KEY"
-        description: "Machine Credential for AWS instances"
-        organization: "{{ organization | default('Default') }}"
-        credential_type: Machine
-        inputs:
-          username: ec2-user
-          # Use the variable directly instead of the file lookup
-          ssh_key_data: "{{ create_key.key.private_key }}"
-          controller_host: "https://control"
-          controller_username: admin
-          controller_password: ansible123!
-        validate_certs: false
   
     - name: Add SSH Controller credential to automation controller
       ansible.controller.credential:
@@ -228,49 +207,6 @@ cat <<EOF | tee /tmp/setup.yml
         controller_username: admin
         controller_password: ansible123!   
         validate_certs: false
-
-    # - name: Add an AWS INVENTORY
-    #   ansible.controller.inventory:
-    #     name: "AWS Inventory"
-    #     description: "Our AWS Inventory"
-    #     organization: "Default"
-    #     state: present
-    #     controller_host: "https://localhost"
-    #     controller_username: admin
-    #     controller_password: ansible123!
-    #     validate_certs: false
-
-    # - name: Add an AWS InventorySource
-    #   ansible.controller.inventory_source:
-    #     name: "AWS Source"
-    #     description: "Source for the AWS Inventory"
-    #     inventory: "AWS Inventory"
-    #     credential: "AWS_Credential"
-    #     source: ec2
-    #     overwrite: "True"
-    #     update_on_launch: "True"
-    #     organization: "Default"
-    #     source_vars:
-    #       private: "false"
-    #       hostnames:
-    #         - 'tag:Name'
-    #       compose: 
-    #         ansible_host: public_ip_address
-    #     state: present
-    #     controller_host: "https://localhost"
-    #     controller_username: admin
-    #     controller_password: ansible123!
-    #     validate_certs: false
-
-    # - name: Update a single inventory source
-    #   ansible.controller.inventory_source_update:
-    #     name: "AWS Source"
-    #     inventory: "AWS Inventory"
-    #     organization: "Default"
-    #     controller_host: "https://localhost"
-    #     controller_username: admin
-    #     controller_password: ansible123!
-    #     validate_certs: false
 
     - name: Add ansible-1 host
       ansible.controller.host:
