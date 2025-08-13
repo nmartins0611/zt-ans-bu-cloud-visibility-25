@@ -20,7 +20,7 @@ First, log in to the Ansible Automation Platform UI with the following credentia
 [cols="1,2a"]
 |===
 | Username | `admin`
-| Password | `admin`
+| Password | `ansible123!`
 |===
 
 ---
