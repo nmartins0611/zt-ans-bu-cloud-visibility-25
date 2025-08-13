@@ -23,8 +23,8 @@ tabs:
   # - name: VS Ccode
   #   url: https://vscode-${guid}.${domain}
   #   external: false
-  - name: "TERMINAL"
-    url: /wetty_control
+  # - name: "TERMINAL"
+  #   url: /wetty_control
   - name: Cloud (AWS)
     url: /cloud
   - name: Dynamic Report
