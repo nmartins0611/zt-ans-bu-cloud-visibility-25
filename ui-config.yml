@@ -27,5 +27,5 @@ tabs:
     url: /wetty_control
   - name: Cloud (AWS)
     url: /cloud
-  - name: Control report
+  - name: Dynamic Report
     url: https://control-report-${guid}.${domain}/
